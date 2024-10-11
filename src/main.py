@@ -13,25 +13,27 @@ from models import *
 def main():
     # Verify token and register for a round
     print(f"Token is {os.getenv('TOKEN')}")
-    msg, participating = participate()
-    print(msg)
+    # msg, participating = participate()
+    # print(msg)
 
-    while not participating:
-        msg, participating = participate()
-        print(msg)
-        time.sleep(5)
-        # print("Exiting")
-        # return None
+    # while not participating:
+    #     msg, participating = participate()
+    #     print(msg)
+    #     time.sleep(5)
+    #     # print("Exiting")
+    #     # return None
     
     # Create context to avoid doing many requests for a single iteration
     context = Context()
 
     # Create task planner and interval_runner that runs POST request every ITER_TIME seconds
-    get_runner = IntervalRunner(ITER_TIME, collect_info, args=[context])
+    get_runner = IntervalRunner(ITER_TIME, context.update, args=[])
     get_runner.start()
 
     while True:
-        try:  
+        try:
+            resp = make_move([])
+            print(resp)
             ###
             # ADD ALL LOGIC HERE
             ###

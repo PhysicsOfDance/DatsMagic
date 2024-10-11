@@ -7,6 +7,7 @@ import typing as tp
 from fastapi import Depends, Response, status
 
 from logger import get_logger
+from models import *
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -36,29 +37,40 @@ def make_request(
         logger.error(f"{datetime.datetime.now()}\n{method} Request for URL: {url} with body: {body}\nRequest failed with status: {resp.status_code}\nError text: {resp_json}")
     return resp_json
 
-def participate() -> tp.Tuple[str, bool]:
-    headers = {
-        "X-Auth-Token": os.getenv('TOKEN'),
-    }
-    api = servers[os.getenv('SERVER')]
-    # url = f"{api}play/url/participate"
 
-    logger.info(datetime.datetime.now())
-    logger.info(f"Attempt to participate in round")
+def make_move(moves: list[CarpetMove]):
+    resp = make_request("POST", f"play/magcarp/player/move")
+    if resp:
+        resp_json = resp.json()
+        resp = CarpetResponse(**resp_json)
+        return resp
+    else:
+        raise Exception("Request failed")
 
-    resp = requests.request("PUT", url, headers=headers)
+# def participate() -> tp.Tuple[str, bool]:
+#     headers = {
+#         "X-Auth-Token": os.getenv('TOKEN'),
+#     }
+#     api = servers[os.getenv('SERVER')]
+#     # url = f"{api}play/url/participate"
 
-    if resp.status_code == status.HTTP_200_OK:
-        logger.info(f"Registered for round successfully\n")
-        return f"ROUND STARTS IN {resp.json()['startsInSec']}", False
+#     logger.info(datetime.datetime.now())
+#     logger.info(f"Attempt to participate in round")
+
+#     resp = requests.request("PUT", url, headers=headers)
+
+#     if resp.status_code == status.HTTP_200_OK:
+#         logger.info(f"Registered for round successfully\n")
+#         return f"ROUND STARTS IN {resp.json()['startsInSec']}", False
         
-    if resp.status_code == status.HTTP_400_BAD_REQUEST:
-        if "NOT" in resp.text:
-            logger.info(f"Failed to register for round\n")
-            return f"Not participating in this round", False
-        if "not" in  resp.text:
-            logger.info(f"Rounds not found\n")
-            return f"Rounds not found", False
-        else:
-            logger.info(f"Round has already started\n")
-            return "Round has already started", True
+#     if resp.status_code == status.HTTP_400_BAD_REQUEST:
+#         if "NOT" in resp.text:
+#             logger.info(f"Failed to register for round\n")
+#             return f"Not participating in this round", False
+#         if "not" in  resp.text:
+#             logger.info(f"Rounds not found\n")
+#             return f"Rounds not found", False
+#         else:
+#             logger.info(f"Round has already started\n")
+#             return "Round has already started", True
+

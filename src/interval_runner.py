@@ -1,8 +1,6 @@
 from dataclasses import dataclass
 from collections import deque
 
-from src.models import Attack, Build, MoveBase
-
 from threading import Timer
 from functools import partial
 from threading import Thread, Lock
