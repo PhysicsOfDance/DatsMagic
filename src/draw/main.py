@@ -1,4 +1,4 @@
-from .utils import *
+from utils import *
 
 import sys
 import time
@@ -8,15 +8,12 @@ import pygame
 COLOR_MAP = {0: 'green', 1: 'blue', 2: 'yellow', 3: 'red'}
 
 STARTING_GRID = Grid(
-    Dim(300, 300),
+    Dim(50, 50),
     [
         {'x': 1, 'y': 1, 'type': 0},
-        {'x': 2, 'y': 1, 'type': 0},
-        {'x': 1, 'y': 2, 'type': 0},
-        {'x': 2, 'y': 2, 'type': 0},
     ],
     [
-        {'x': 0, ''}
+        Anomaly(10, 10, 5, 1)
     ]
 )
 
@@ -28,8 +25,6 @@ def updating_routine(grid: Grid, feedback: Feedback):
     while True:
         if pygame.QUIT in [e.type for e in pygame.event.get()]:  # should be keyboard interrupt here instead
             sys.exit(0)
-
-        time.sleep(0.5) # some difficult calculations
 
         # feedback is accumulated during these calculations
         for cell in grid.cells:
@@ -55,6 +50,7 @@ def drawing_routine(grid: Grid, color_map: dict, hook: Feedback):
 
         screen.fill((0, 0, 0))
         draw_grid(screen, grid, color_map)
+
         pygame.display.flip()
         time.sleep(0.1)
 
