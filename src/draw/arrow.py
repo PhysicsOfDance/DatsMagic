@@ -5,9 +5,9 @@ def draw_arrow(
         start: pygame.Vector2,
         end: pygame.Vector2,
         color: pygame.Color,
-        body_width: int = 2,
-        head_width: int = 4,
-        head_height: int = 2,
+        body_width: int = 4,
+        head_width: int = 8,
+        head_height: int = 16,
     ):
     """Draw an arrow between start and end with the arrow head at the end.
 

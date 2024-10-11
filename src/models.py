@@ -36,6 +36,10 @@ class Vec2(BaseModel):
         if not isinstance(scalar, int):
             raise ValueError("Operand must be a numeric value")
         return Vec2(x=self.x*scalar, y=self.y*scalar)
+    
+    @property
+    def length(self) -> float:
+        return (self.x ** 2 + self.y ** 2) ** 0.5
 
     @property
     def pos(self):

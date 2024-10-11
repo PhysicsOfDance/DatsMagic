@@ -54,7 +54,7 @@ def draw_grid(screen: pygame.Surface, grid: Grid) -> None:
     for arrow in grid.arrows:
         draw_arrow(
             screen,
-            start=arrow.start,
-            end=arrow.end,
+            start=arrow.start * cell_width,
+            end=arrow.end * cell_height,
             color=arrow.color
         )
