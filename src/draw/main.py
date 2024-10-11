@@ -27,6 +27,7 @@ def drawing_routine(ctxt: Context):
     """
 
     pygame.init()
+    pygame.font.init()
     screen = pygame.display.set_mode((600, 600))
 
     while not ctxt.interrupt:
@@ -38,6 +39,10 @@ def drawing_routine(ctxt: Context):
             continue
         grid = grids[ctxt.current_carpet]
         screen.fill((0, 0, 0))
+
+        font = pygame.font.SysFont('arial', 30)
+        text = font.render(str(ctxt.current_carpet + 1), True, 'white')
+        screen.blit(text, (10, 10))
         draw_grid(screen, grid)
 
         pygame.display.flip()
