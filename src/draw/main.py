@@ -1,3 +1,4 @@
+from context import Context
 from .utils import *
 
 import sys
@@ -34,8 +35,7 @@ def updating_routine(grid: Grid, feedback: Feedback):
 
 
 
-
-def drawing_routine(grid: Grid, hook: Feedback):
+def drawing_routine(ctxt: Context, hook: Feedback):
     """
         A drawing routine to be called in a separate thread
     """
@@ -47,6 +47,7 @@ def drawing_routine(grid: Grid, hook: Feedback):
         if pygame.QUIT in [e.type for e in pygame.event.get()]:
             sys.exit(0)
 
+        grid = ctxt.get_grids()[0]
         screen.fill((0, 0, 0))
         draw_grid(screen, grid)
 
@@ -64,13 +65,3 @@ def drawing_routine(grid: Grid, hook: Feedback):
 
         if pressed_keys[pygame.K_d]:
             hook.right += 1
-
-
-
-if __name__ == "__main__":
-    grid = STARTING_GRID
-
-    hook = Feedback(up=0, down=0, left=0, right=0)
-    thread = threading.Thread(target=drawing_routine, args=[grid, hook])
-    thread.start()
-    updating_routine(grid, hook)
