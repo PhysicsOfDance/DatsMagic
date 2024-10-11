@@ -1,6 +1,10 @@
 import typing as tp
 import functools
 
+class IncorrectDataException(Exception):
+    pass
+
+
 def turncache(func):
     """
     Декоратор, навешиваем на функции для вычисления кода

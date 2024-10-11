@@ -6,6 +6,7 @@ from api import make_move
 from draw.utils import Circle, Dim, Grid
 from logger import get_logger
 from models import *
+from utils import IncorrectDataException
 
 logger = get_logger("CONTEXT")
 
@@ -29,13 +30,17 @@ class Context(metaclass=Singleton):
         self.moves: list[CarpetMove] = []
 
     def update_on_time(self):
-        move_resp = make_move(self.moves)
+        try:
+            move_resp = make_move(self.moves)
 
-        self.anomalies = move_resp.anomalies
-        self.bounties = move_resp.bounties
-        self.enemies = move_resp.enemies
-        self.carpets = move_resp.transports
-        self.wanted = move_resp.wantedList
+            self.anomalies = move_resp.anomalies
+            self.bounties = move_resp.bounties
+            self.enemies = move_resp.enemies
+            self.carpets = move_resp.transports
+            self.wanted = move_resp.wantedList
+
+        except IncorrectDataException as e:
+            print(f"Incorrect data found: {e}")
 
         # logger.info(self.anomalies)
         # logger.info(self.bounties)
