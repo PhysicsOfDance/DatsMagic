@@ -31,15 +31,11 @@ def draw_grid(screen: pygame.Surface, grid: Grid) -> None:
     cell_height = screen.get_height() / grid.dim.height
 
     for cell in grid.cells:
-        pygame.draw.rect(
+        pygame.draw.circle(
             screen,
-            cell['type'],
-            (
-                cell['x'] * cell_width,
-                cell['y'] * cell_height,
-                cell_width,
-                cell_height,
-            ),
+            color=cell['type'],
+            center=(cell['x'] * cell_width, cell['y'] * cell_height),
+            radius=5
         )
 
     for circle in grid.circles:
