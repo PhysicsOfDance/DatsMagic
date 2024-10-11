@@ -12,7 +12,7 @@ def get_logger(name):
     ch = logging.StreamHandler()
     if os.environ.get("LOGFILE", None):
         filename = LOGS_FOLDER + os.environ["LOGFILE"] + "_" + SESSION_START + ".log"
-        file = logging.FileHandler(filename)
+        file = logging.FileHandler(filename, encoding='utf-8')
     logger.setLevel(logging.DEBUG)
     logger.addHandler(file)
 

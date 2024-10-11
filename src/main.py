@@ -5,7 +5,7 @@ load_dotenv()
 
 from api import *
 from context import Context
-from const import ITER_TIME
+from const import *
 from interval_runner import IntervalRunner
 
 from models import *
@@ -29,13 +29,11 @@ def main():
     context = Context()
 
     # Create task planner and interval_runner that runs POST request every ITER_TIME seconds
-    get_runner = IntervalRunner(ITER_TIME, context.update, args=[])
-    get_runner.start()
+    context_updater = IntervalRunner(UPDATE_TIME, context.update_on_time, args=[])
+    context_updater.start()
 
     while True:
         try:
-            resp = make_move([])
-            # logger.error(resp)
             ###
             # ADD ALL LOGIC HERE
             ###
@@ -43,7 +41,7 @@ def main():
 
         except KeyboardInterrupt:
             print("Shutting down...")
-            get_runner.stop()
+            context_updater.stop()
             break
 
 if __name__ == "__main__":
