@@ -13,8 +13,8 @@ class Vec2(BaseModel):
     
     @pos.setter
     def pos(self, new_pos: tuple[int, int]):
-        assert isinstance(new_pos.x, int)
-        assert isinstance(new_pos.y, int)
+        assert isinstance(new_pos[0], int)
+        assert isinstance(new_pos[1], int)
         self.x = new_pos.x
         self.y = new_pos.y
 
