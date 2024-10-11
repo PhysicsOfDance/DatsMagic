@@ -10,6 +10,8 @@ from interval_runner import IntervalRunner
 
 from models import *
 
+logger = get_logger("MAIN")
+
 def main():
     # Verify token and register for a round
     print(f"Token is {os.getenv('TOKEN')}")
@@ -33,7 +35,7 @@ def main():
     while True:
         try:
             resp = make_move([])
-            print(resp)
+            # logger.error(resp)
             ###
             # ADD ALL LOGIC HERE
             ###

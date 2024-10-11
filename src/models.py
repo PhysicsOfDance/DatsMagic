@@ -1,13 +1,11 @@
+import typing as tp
+
 from pydantic import BaseModel
 
 
 class Vec2(BaseModel):
-    x: int = 0
-    y: int = 0
-
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+    x: float = 0.0
+    y: float = 0.0
 
     @property
     def pos(self):
@@ -27,16 +25,17 @@ class CarpetMove(BaseModel):
     attack: Vec2
     id: str
 
-class CarperRequest(BaseModel):
+class CarpetMoveRequest(BaseModel):
     transports: list[CarpetMove]
 
-class CarpetResponse(Vec2):
+
+class Carpet(Vec2):
     anomalyAcceleration: Vec2
     attackCooldownMs: int
     deathCount: int
     health: int
     id: str
-    selfAcceleration: int
+    selfAcceleration: Vec2
     shieldCooldownMs: int
     shieldLeftMs: int
     status: str
@@ -44,10 +43,10 @@ class CarpetResponse(Vec2):
 
 
 class Anomaly(Vec2):
-    effectiveRadius: int
+    effectiveRadius: float
     id: str
-    radius: int
-    strength: int
+    radius: float
+    strength: float
     velocity: Vec2
 
 
@@ -69,22 +68,23 @@ class Wanted(Vec2):
     status: str
     velocity: Vec2
 
-class MoveResponse(BaseModel):
+class CarpetMoveResponse(BaseModel):
     anomalies: list[Anomaly]
     attackCooldownMs: int
     attackDamage: int
-    attackExplosionRadius: int
-    attackRange: int
+    attackExplosionRadius: float
+    attackRange: float
     bounties: list[Bounty]
     enemies: list[Enemy]
+    errors: tp.Any
     mapSize: Vec2
-    maxAccel: int
-    maxSpeed: int
+    maxAccel: float
+    maxSpeed: float
     name: str
     points: int
     reviveTimeoutSec: int
     shieldCooldownMs: int
     shieldTimeMs: int
     transportRadius: int
-    transports: list[CarpetResponse]
+    transports: list[Carpet]
     wantedList: list[Wanted]
