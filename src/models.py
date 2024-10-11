@@ -1,5 +1,4 @@
 import typing as tp
-
 from pydantic import BaseModel
 
 class Feedback(BaseModel):
@@ -33,9 +32,12 @@ class Vec2(BaseModel):
         return Vec2(x=self.x-other.x, y=self.y-other.y)
 
     def __mul__(self, scalar):
-        if not isinstance(scalar, int):
+        if not isinstance(scalar, int) and not isinstance(scalar, float):
             raise ValueError("Operand must be a numeric value")
         return Vec2(x=self.x*scalar, y=self.y*scalar)
+    
+    def __rmul__(self, scalar):
+        return self.__mul__(scalar)
     
     @property
     def length(self) -> float:
@@ -43,12 +45,10 @@ class Vec2(BaseModel):
 
     @property
     def pos(self):
-        return (self.x, self.y)
+        return Vec2(**self.model_dump())
 
     @pos.setter
-    def pos(self, new_pos: tuple[int, int]):
-        assert isinstance(new_pos[0], int)
-        assert isinstance(new_pos[1], int)
+    def pos(self, new_pos: "Vec2"):
         self.x = new_pos.x
         self.y = new_pos.y
 

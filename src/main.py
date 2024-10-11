@@ -3,7 +3,8 @@ import time
 import threading
 from dotenv import load_dotenv
 
-from draw.main import drawing_routine
+from draw.drawer import draw_loop
+from draw.models import Grid
 load_dotenv()
 
 from api import *
@@ -26,9 +27,9 @@ def main():
     context_updater = IntervalRunner(UPDATE_TIME, context.update_on_time, args=[])
     context_updater.start()
 
-    drawing_thread = threading.Thread(target=drawing_routine, args=[context])
+    drawing_thread = threading.Thread(target=draw_loop, args=[])
     drawing_thread.start()
-    while True:
+    while not context.interrupt:
         try:
             ###
             # ADD ALL LOGIC HERE
