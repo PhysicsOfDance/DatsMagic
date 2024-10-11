@@ -2,6 +2,18 @@ import typing as tp
 
 from pydantic import BaseModel
 
+class Feedback(BaseModel):
+    up: int = 0
+    down: int = 0
+    left: int = 0
+    right: int = 0
+
+    def flush(self):
+        self.up = 0
+        self.down = 0
+        self.left = 0
+        self.right = 0
+
 
 class Vec2(BaseModel):
     x: float = 0.0
@@ -9,17 +21,17 @@ class Vec2(BaseModel):
 
     def __hash__(self):
         return hash(str(self))
-    
+
     def __add__(self, other):
         if not isinstance(other, Vec2):
             raise ValueError("Operand must be instance of Vec2")
         return Vec2(x=self.x+other.x, y=self.y+other.y)
-    
+
     def __sub__(self, other):
         if not isinstance(other, Vec2):
             raise ValueError("Operand must be instance of Vec2")
         return Vec2(x=self.x-other.x, y=self.y-other.y)
-    
+
     def __mul__(self, scalar):
         if not isinstance(scalar, int):
             raise ValueError("Operand must be a numeric value")
@@ -28,7 +40,7 @@ class Vec2(BaseModel):
     @property
     def pos(self):
         return (self.x, self.y)
-    
+
     @pos.setter
     def pos(self, new_pos: tuple[int, int]):
         assert isinstance(new_pos[0], int)
