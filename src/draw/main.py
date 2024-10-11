@@ -33,7 +33,7 @@ def drawing_routine(ctxt: Context):
         grids = ctxt.get_grids()
         if not grids:
             continue
-        grid = grids[0]
+        grid = grids[ctxt.current_carpet]
         screen.fill((0, 0, 0))
         draw_grid(screen, grid)
 
@@ -51,3 +51,18 @@ def drawing_routine(ctxt: Context):
 
         if pressed_keys[pygame.K_d]:
             ctxt.feedback.right += 1
+
+        if pressed_keys[pygame.K_1]:
+            ctxt.current_carpet = 0
+
+        if pressed_keys[pygame.K_2]:
+            ctxt.current_carpet = 1
+
+        if pressed_keys[pygame.K_3]:
+            ctxt.current_carpet = 2
+
+        if pressed_keys[pygame.K_4]:
+            ctxt.current_carpet = 3
+
+        if pressed_keys[pygame.K_5]:
+            ctxt.current_carpet = 4
