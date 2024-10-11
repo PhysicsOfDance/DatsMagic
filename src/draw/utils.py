@@ -2,9 +2,12 @@ import pygame
 from collections import namedtuple
 from pydantic import BaseModel
 
+from .arrow import draw_arrow
+
 Circle = namedtuple("Circle", ["x", "y", "radius", "color"])
 Dim = namedtuple("Dimension", ["width", "height"])
-Grid = namedtuple("Grid", ["dim", "cells", "objects"])
+Grid = namedtuple("Grid", ["dim", "cells", "circles", "arrows"])
+Arrow = namedtuple("Arrow", ["start", "end", "color"])
 
 class Feedback(BaseModel):
     up: int
@@ -39,11 +42,19 @@ def draw_grid(screen: pygame.Surface, grid: Grid) -> None:
             ),
         )
 
-    for object in grid.objects:
+    for circle in grid.circles:
         pygame.draw.circle(
             screen,
-            color=object.color,
-            center=(object.x * cell_width, object.y * cell_height),
-            radius=float(object.radius * int(cell_width)),
+            color=circle.color,
+            center=(circle.x * cell_width, circle.y * cell_height),
+            radius=float(circle.radius * int(cell_width)),
             width= int(cell_width)
+        )
+
+    for arrow in grid.arrows:
+        draw_arrow(
+            screen,
+            start=arrow.start,
+            end=arrow.end,
+            color=arrow.color
         )

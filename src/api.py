@@ -1,6 +1,7 @@
 import datetime
 import os
 import time
+import json
 import requests
 import typing as tp
 
@@ -31,7 +32,11 @@ def make_request(
     }
     resp = requests.request(method, url, headers=headers, json=body, params=params)
 
-    resp_json = resp.json()
+    # resp_json = resp.json()
+    with open("mock.json") as mock_file:
+        resp_json = json.load(mock_file)
+        return True, resp_json
+
     if resp.status_code == status.HTTP_200_OK:
         logger.debug(f"{datetime.datetime.now()}\n{method} Request for URL: {url}\nRequest success\n")
         return True, resp_json

@@ -14,6 +14,9 @@ STARTING_GRID = Grid(
     ],
     [
         Circle(10, 10, 5, 'green')
+    ],
+    [
+        # No arrows
     ]
 )
 

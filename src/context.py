@@ -3,7 +3,7 @@ import typing as tp
 from datetime import datetime
 
 from api import make_move
-from draw.utils import Circle, Dim, Grid
+from draw.utils import Circle, Dim, Grid, Arrow
 from logger import get_logger
 from models import *
 from utils import IncorrectDataException
@@ -56,7 +56,9 @@ class Context(metaclass=Singleton):
         for center in self.carpets:
             # center is the carpet this grid is centered to
             cells = []
-            objects = []
+            circles = []
+            arrows = []
+
             for carpet in self.carpets:
                 cells.append({'x': int(carpet.x - center.x) + 150, 'y': int(carpet.y - center.y) + 150, 'type': 'green'})
 
@@ -67,16 +69,19 @@ class Context(metaclass=Singleton):
                 cells.append({'x': int(wanted.x - center.x) + 150, 'y': int(wanted.y - center.y) + 150, 'type': 'yellow'})
 
             for bounty in self.bounties:
-                objects.append(Circle(int(bounty.x - center.x) + 150, int(bounty.y - center.y) + 150, bounty.radius, 'blue'))
+                circles.append(Circle(int(bounty.x - center.x) + 150, int(bounty.y - center.y) + 150, bounty.radius, 'blue'))
 
             for anomaly in self.anomalies:
-                objects.append(Circle(int(anomaly.x - center.x) + 150, int(anomaly.y - center.y) + 150, anomaly.radius, 'orange'))
+                circles.append(Circle(int(anomaly.x - center.x) + 150, int(anomaly.y - center.y) + 150, anomaly.radius, 'orange'))
+            
+            # arrows.append(Arrow(start=))
 
             grids.append(
                 Grid(
                     Dim(300, 300),
                     cells,
-                    objects
+                    circles,
+                    arrows
                 )
             )
         return grids
