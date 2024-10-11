@@ -28,6 +28,7 @@ class Context(metaclass=Singleton):
         self.wanted: list[Wanted] = []
         # To make move
         self.moves: list[CarpetMove] = []
+        self.feedback: Feedback = Feedback()
 
     def update_on_time(self):
         try:

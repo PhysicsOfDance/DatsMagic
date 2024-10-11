@@ -18,24 +18,7 @@ STARTING_GRID = Grid(
 )
 
 
-def updating_routine(grid: Grid, feedback: Feedback):
-    """
-        Just an example
-    """
-    while True:
-        if pygame.QUIT in [e.type for e in pygame.event.get()]:  # should be keyboard interrupt here instead
-            sys.exit(0)
-
-        # feedback is accumulated during these calculations
-        for cell in grid.cells:
-            cell.update({'x': (cell['x'] + feedback.right - feedback.left) % grid.dim.width ,
-                'y': (cell['y'] + feedback.down - feedback.up) % grid.dim.height})
-
-        feedback.flush() # flushing it afterwards
-
-
-
-def drawing_routine(ctxt: Context, hook: Feedback):
+def drawing_routine(ctxt: Context):
     """
         A drawing routine to be called in a separate thread
     """
@@ -55,13 +38,13 @@ def drawing_routine(ctxt: Context, hook: Feedback):
 
         pressed_keys = pygame.key.get_pressed()
         if pressed_keys[pygame.K_w]:
-            hook.up += 1
+            ctxt.feedback.up += 1
 
         if pressed_keys[pygame.K_s]:
-            hook.down += 1
+            ctxt.feedback.down += 1
 
         if pressed_keys[pygame.K_a]:
-            hook.left += 1
+            ctxt.feedback.left += 1
 
         if pressed_keys[pygame.K_d]:
-            hook.right += 1
+            ctxt.feedback.right += 1
