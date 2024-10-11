@@ -40,7 +40,7 @@ class Vec2(BaseModel):
 class CarpetMove(BaseModel):
     acceleration: Vec2
     activateShield: bool = False
-    attack: Vec2 = Vec2()
+    attack: Vec2 | None = None
     id: str
 
 

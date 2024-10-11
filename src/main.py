@@ -13,17 +13,8 @@ from models import *
 logger = get_logger("MAIN")
 
 def main():
-    # Verify token and register for a round
+    # Verify token
     print(f"Token is {os.getenv('TOKEN')}")
-    # msg, participating = participate()
-    # print(msg)
-
-    # while not participating:
-    #     msg, participating = participate()
-    #     print(msg)
-    #     time.sleep(5)
-    #     # print("Exiting")
-    #     # return None
     
     # Create context to avoid doing many requests for a single iteration
     context = Context()
@@ -40,13 +31,13 @@ def main():
             if context.carpets:
                 context.moves = [CarpetMove(
                     acceleration = Vec2(x=1, y=1) - carpet.anomalyAcceleration,
-                    attack = Vec2(x=carpet.x + 1, y=carpet.y + 1),
                     id = carpet.id,
                 ) for carpet in context.carpets]
 
-                # for carpet in context.carpets:
-                #     print(f"carpet {carpet.id} pos = {carpet.pos}")
-                # time.sleep(5)
+                for carpet in context.carpets:
+                    print(f"carpet {carpet.id} pos = {carpet.pos}")
+                print()
+                time.sleep(5)
 
         except KeyboardInterrupt:
             print("Shutting down...")

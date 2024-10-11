@@ -13,10 +13,9 @@ def get_logger(name):
     if os.environ.get("LOGFILE", None):
         filename = LOGS_FOLDER + os.environ["LOGFILE"] + "_" + SESSION_START + ".log"
         file = logging.FileHandler(filename, encoding='utf-8')
+        logger.addHandler(file)
     logger.setLevel(logging.DEBUG)
-    logger.addHandler(file)
 
     # console = logging.StreamHandler(stream=sys.stdout)
     # logger.addHandler(console)
-
     return logger

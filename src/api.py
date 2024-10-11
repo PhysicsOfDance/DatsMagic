@@ -50,31 +50,3 @@ def make_move(transports: list[CarpetMove]) -> CarpetMoveResponse | None:
     else:
         logger.error(resp_json)
         raise IncorrectDataException(resp_json)
-
-# def participate() -> tp.Tuple[str, bool]:
-#     headers = {
-#         "X-Auth-Token": os.getenv('TOKEN'),
-#     }
-#     api = servers[os.getenv('SERVER')]
-#     # url = f"{api}play/url/participate"
-
-#     logger.info(datetime.datetime.now())
-#     logger.info(f"Attempt to participate in round")
-
-#     resp = requests.request("PUT", url, headers=headers)
-
-#     if resp.status_code == status.HTTP_200_OK:
-#         logger.info(f"Registered for round successfully\n")
-#         return f"ROUND STARTS IN {resp.json()['startsInSec']}", False
-        
-#     if resp.status_code == status.HTTP_400_BAD_REQUEST:
-#         if "NOT" in resp.text:
-#             logger.info(f"Failed to register for round\n")
-#             return f"Not participating in this round", False
-#         if "not" in  resp.text:
-#             logger.info(f"Rounds not found\n")
-#             return f"Rounds not found", False
-#         else:
-#             logger.info(f"Round has already started\n")
-#             return "Round has already started", True
-
