@@ -38,11 +38,13 @@ def make_request(
     return resp_json
 
 
-def make_move(moves: list[CarpetMove]):
+def make_move(transports: list[CarpetMove]):
+    body = CarpetMoveRequest(transports=transports)
     resp = make_request("POST", f"play/magcarp/player/move")
     if resp:
         resp_json = resp.json()
-        resp = CarpetResponse(**resp_json)
+        logger.error(resp_json)
+        resp = CarpetMoveResponse(**resp_json)
         return resp
     else:
         raise Exception("Request failed")
