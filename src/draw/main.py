@@ -26,11 +26,14 @@ def drawing_routine(ctxt: Context):
     pygame.init()
     screen = pygame.display.set_mode((600, 600))
 
-    while True:
+    while not ctxt.interrupt:
         if pygame.QUIT in [e.type for e in pygame.event.get()]:
             sys.exit(0)
 
-        grid = ctxt.get_grids()[0]
+        grids = ctxt.get_grids()
+        if not grids:
+            continue
+        grid = grids[0]
         screen.fill((0, 0, 0))
         draw_grid(screen, grid)
 
