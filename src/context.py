@@ -14,10 +14,11 @@ class Singleton(type):
 
 class Context(metaclass=Singleton):
     def __init__(self):
-        self.dynamic_smth: tp.Any | None = None 
-
-        # No need to update static objects
-        self.static_smth: tp.Any | None = datetime.now() 
+        self.anomalies: list[Anomaly] = []
+        self.bounties: list[Bounty] = []
+        self.enemies: list[Enemy] = []
+        self.carpets: list[Carpet] = []
+        self.wanted: list[Wanted] = []
 
     def update(self):
-        self.dynamic_smth = datetime.now()
+        pass
