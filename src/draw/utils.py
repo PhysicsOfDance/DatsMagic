@@ -2,7 +2,7 @@ import pygame
 from collections import namedtuple
 from pydantic import BaseModel
 
-Anomaly = namedtuple("Anomaly", ["x", "y", "radius", "color"])
+Circle = namedtuple("Circle", ["x", "y", "radius", "color"])
 Dim = namedtuple("Dimension", ["width", "height"])
 Grid = namedtuple("Grid", ["dim", "cells", "objects"])
 
@@ -19,7 +19,7 @@ class Feedback(BaseModel):
         self.right = 0
 
 
-def draw_grid(screen: pygame.Surface, grid: Grid, color_dict: dict) -> None:
+def draw_grid(screen: pygame.Surface, grid: Grid) -> None:
     """
         This function draws the game of life on the given
         pygame.Surface object.
@@ -30,7 +30,7 @@ def draw_grid(screen: pygame.Surface, grid: Grid, color_dict: dict) -> None:
     for cell in grid.cells:
         pygame.draw.rect(
             screen,
-            color_dict.get(cell['type'], 'black'),
+            cell['type'],
             (
                 cell['x'] * cell_width,
                 cell['y'] * cell_height,
@@ -42,7 +42,7 @@ def draw_grid(screen: pygame.Surface, grid: Grid, color_dict: dict) -> None:
     for object in grid.objects:
         pygame.draw.circle(
             screen,
-            color=color_dict.get(object.color, 'black'),
+            color=object.color,
             center=(object.x * cell_width, object.y * cell_height),
             radius=float(object.radius * int(cell_width)),
             width= int(cell_width)

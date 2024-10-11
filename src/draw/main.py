@@ -5,15 +5,14 @@ import time
 import threading
 import pygame
 
-COLOR_MAP = {0: 'green', 1: 'blue', 2: 'yellow', 3: 'red'}
 
 STARTING_GRID = Grid(
     Dim(50, 50),
     [
-        {'x': 1, 'y': 1, 'type': 0},
+        {'x': 1, 'y': 1, 'type': 'blue'},
     ],
     [
-        Anomaly(10, 10, 5, 1)
+        Circle(10, 10, 5, 'green')
     ]
 )
 
@@ -36,7 +35,7 @@ def updating_routine(grid: Grid, feedback: Feedback):
 
 
 
-def drawing_routine(grid: Grid, color_map: dict, hook: Feedback):
+def drawing_routine(grid: Grid, hook: Feedback):
     """
         A drawing routine to be called in a separate thread
     """
@@ -49,10 +48,9 @@ def drawing_routine(grid: Grid, color_map: dict, hook: Feedback):
             sys.exit(0)
 
         screen.fill((0, 0, 0))
-        draw_grid(screen, grid, color_map)
+        draw_grid(screen, grid)
 
         pygame.display.flip()
-        time.sleep(0.1)
 
         pressed_keys = pygame.key.get_pressed()
         if pressed_keys[pygame.K_w]:
@@ -73,6 +71,6 @@ if __name__ == "__main__":
     grid = STARTING_GRID
 
     hook = Feedback(up=0, down=0, left=0, right=0)
-    thread = threading.Thread(target=drawing_routine, args=[grid, COLOR_MAP, hook])
+    thread = threading.Thread(target=drawing_routine, args=[grid, hook])
     thread.start()
     updating_routine(grid, hook)
