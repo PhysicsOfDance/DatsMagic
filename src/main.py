@@ -43,7 +43,7 @@ def main():
             ###
             if context.carpets:
                 context.moves = [CarpetMove(
-                    acceleration = Vec2(x=1, y=1),
+                    acceleration = Vec2(x=0, y=0),
                     id = carpet.id,
                 ) for carpet in context.carpets]
 

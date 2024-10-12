@@ -1,7 +1,7 @@
 import json
 from datetime import datetime, timedelta
 
-from const import MOCK_IGNORE_ANOMALIES
+from const import MOCK_IGNORE_ANOMALIES, MOCK_START_STILL
 from models import *
 
 class MockServer:
@@ -9,7 +9,8 @@ class MockServer:
         self.state: CarpetMoveResponse | None = None
         self.last_update_time: datetime = datetime.now()
 
-        with open("mock.json") as mock_file:
+        mock_filename = "mock_still.json" if MOCK_START_STILL else "mock.json"
+        with open(mock_filename) as mock_file:
             init_json = json.load(mock_file)
             self.state = CarpetMoveResponse(**init_json)
             
