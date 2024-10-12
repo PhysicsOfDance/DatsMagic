@@ -75,6 +75,15 @@ def draw_grid(screen: pygame.Surface, grid: Grid) -> None:
     for cell in grid.cells:
         cell.x *= CELL_WIDTH
         cell.y *= CELL_WIDTH
+
+        if cell.attack:
+            pygame.draw.circle(
+                screen,
+                color=Color.RED.value,
+                center=(cell.x, cell.y),
+                radius=(SHIELD_RADIUS + (ATTACK_DISPLAY_RADIUS - SHIELD_RADIUS) * cell.attack) * CELL_WIDTH
+            )
+
         if cell.shield != 0:
             pygame.draw.circle(
                 screen,

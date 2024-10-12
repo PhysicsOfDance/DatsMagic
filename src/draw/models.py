@@ -21,6 +21,7 @@ class Color(Enum):
 class Cell(Vec2):
     color: Color
     shield: float
+    attack: float | None
 
 class Circle(Vec2):
     radius: float
