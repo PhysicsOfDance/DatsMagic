@@ -18,8 +18,8 @@ class Grid:
         self._add_entities(context.carpets, Color.GREEN)
         self._add_entities(context.enemies, Color.RED)
         self._add_entities(context.wanted, Color.YELLOW)
-        self._add_entities(context.bounties, Color.BLUE, show_speed=False)
-        self._add_entities(context.anomalies, Color.ORANGE, show_speed=False)
+        self._add_entities(context.bounties, Color.ORANGE, show_speed=False)
+        self._add_entities(context.anomalies, Color.BLUE, show_speed=False)
 
         # Draw own acceleration vector
         for carpet in context.carpets:
@@ -33,7 +33,7 @@ class Grid:
         for carpet in context.carpets:
             local_pos = self._to_local(carpet.pos)
             arrow_end = local_pos + self.acceleration_coef * carpet.anomalyAcceleration.clipped(50)
-            self.arrows.append(Arrow(start=local_pos, end=arrow_end, color=Color.ORANGE))
+            self.arrows.append(Arrow(start=local_pos, end=arrow_end, color=Color.BLUE))
 
 
     def _add_entities(self, entities: list[tp.Any], color: Color, show_speed: bool = True):
