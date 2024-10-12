@@ -58,9 +58,8 @@ def main():
                     ))
                 context.moves = moves
                 # for carpet in context.carpets:
-                #     print(f"carpet {carpet.id} pos = {carpet.pos}")
+                    # print(f"carpet {carpet.id} pos = {carpet.pos}")
                 # print()
-                # time.sleep(5)
 
         except KeyboardInterrupt:
             print("Shutting down...")
