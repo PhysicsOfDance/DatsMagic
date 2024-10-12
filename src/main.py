@@ -52,7 +52,7 @@ def main():
                 for (carpet, pid) in zip(context.carpets, context.pids):
                     pid.update_target(carpet)
                     moves.append(CarpetMove(
-                        acceleration=pid.get_acceleration_2(),
+                        acceleration=pid.get_acceleration_3(),
                         activateShield=False,
                         id=carpet.id
                     ))
