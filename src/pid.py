@@ -22,8 +22,16 @@ class PidController:
             acc_y = 0
 
         anomaly = self.carpet.anomalyAcceleration
-        print(Vec2(x=acc_x - anomaly.x, y=acc_y - anomaly.y))
+        acc_x = acc_x / 200
         return Vec2(x=acc_x - anomaly.x, y=acc_y - anomaly.y)
+
+    def get_acceleration_2(self) -> Vec2:
+        dist = Vec2(x=(self.target.x - self.carpet.x), y=(self.target.y - self.carpet.y))
+        total = np.sqrt( dist.x** 2 + dist.y ** 2)
+        coef = 10 / total
+        print(Vec2(x=dist.x * coef, y=dist.y * coef))
+        return Vec2(x=dist.x * coef, y=dist.y * coef)
+
 
     def update_target(self, carpet: Carpet):
         from context import Context
