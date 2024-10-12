@@ -39,10 +39,11 @@ class Grid:
     def _add_entities(self, entities: list[tp.Any], color: Color, show_speed: bool = True):
         for entity in entities:
             local_pos = self._to_local(entity.pos)
+            attack = None
             if isinstance(entity, Carpet):
-                self.cells.append(Cell(x=local_pos.x, y=local_pos.y, color=color, shield=entity.shieldLeftMs / MAX_SHIELD_DURATION, attack=entity.attackCooldownMs / ATTACK_CD))
-            elif show_speed:
-                self.cells.append(Cell(x=local_pos.x, y=local_pos.y, color=color, shield=entity.shieldLeftMs / MAX_SHIELD_DURATION, attack=None))
+                attack = entity.attackCooldownMs / ATTACK_CD
+            if show_speed:
+                self.cells.append(Cell(x=local_pos.x, y=local_pos.y, color=color, shield=entity.shieldLeftMs / MAX_SHIELD_DURATION, attack=attack))
                 # Draw velocity vector
                 arrow_end = local_pos + self.speed_coef * entity.velocity
                 self.arrows.append(Arrow(start=local_pos, end=arrow_end, color=color))
