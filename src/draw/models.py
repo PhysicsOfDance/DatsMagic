@@ -16,9 +16,11 @@ class Color(Enum):
     BLUE = pygame.Color('blue')
     YELLOW = pygame.Color('yellow')
     ORANGE = pygame.Color('orange')
+    GRAY = pygame.Color('gray')
 
 class Cell(Vec2):
     color: Color
+    shield: float
 
 class Circle(Vec2):
     radius: float

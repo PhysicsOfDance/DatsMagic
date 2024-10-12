@@ -38,7 +38,7 @@ class Grid:
         for entity in entities:
             local_pos = self._to_local(entity.pos)
             if show_speed:
-                self.cells.append(Cell(x=local_pos.x, y=local_pos.y, color=color))
+                self.cells.append(Cell(x=local_pos.x, y=local_pos.y, color=color, shield=entity.shieldLeftMs / MAX_SHIELD_DURATION))
                 # Draw velocity vector
                 arrow_end = local_pos + self.speed_coef * entity.velocity
                 self.arrows.append(Arrow(start=local_pos, end=arrow_end, color=color))
