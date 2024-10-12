@@ -37,18 +37,18 @@ class Vec2(BaseModel):
         if not isinstance(scalar, int) and not isinstance(scalar, float):
             raise ValueError("Operand must be a numeric value")
         return Vec2(x=self.x*scalar, y=self.y*scalar)
-    
+
     def __rmul__(self, scalar):
         return self.__mul__(scalar)
-    
+
     @property
     def length(self) -> float:
         return (self.x ** 2 + self.y ** 2) ** 0.5
-    
+
     @property
     def sqr_length(self) -> float:
         return self.x ** 2 + self.y ** 2
-    
+
     def clipped(self, max_value: float) -> "Vec2":
         if self.x < EPS and self.y < EPS:
             return Vec2(x=0, y=0)

@@ -8,6 +8,7 @@ from logger import get_logger
 from mock_server import MockServer
 from models import *
 from utils import IncorrectDataException
+from pid import PidController
 
 logger = get_logger("CONTEXT")
 
@@ -38,17 +39,19 @@ class Context(metaclass=Singleton):
         # Private variables
         self.__current_carpet_index: int = 0
         self.__left_corner_text: str = str(self.__current_carpet_index + 1)
-    
+
+        self.pids: list[PidController] = []
+
     ####################################################################
 
     @property
     def current_carpet_index(self) -> int:
         return self.__current_carpet_index
-    
+
     @property
     def left_corner_text(self) -> str:
         return self.__left_corner_text
-    
+
     @current_carpet_index.setter
     def current_carpet_index(self, new_index: int) -> None:
         self.__current_carpet_index = new_index
