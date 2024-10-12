@@ -67,7 +67,7 @@ class PidController:
 
         if self.target:
             dist = Vec2(x=(self.target.x - self.carpet.x), y=(self.target.y - self.carpet.y))
-            if dist.length < COLLECTED_BOUNTY_DIST or dist.length > self.previous_dist_length:
+            if dist.length < 4 or dist.length > self.previous_dist_length:
                 # If we are getting futher from target or collected it, change the target
                 self.target = None
                 self.previous_dist_length = np.inf

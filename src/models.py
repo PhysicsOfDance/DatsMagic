@@ -40,6 +40,20 @@ class Vec2(BaseModel):
 
     def __rmul__(self, scalar):
         return self.__mul__(scalar)
+
+    def __div__(self, scalar):
+            if not isinstance(scalar, int) and not isinstance(scalar, float):
+                raise ValueError("Operand must be a numeric value")
+            if scalar == 0:
+                raise ValueError("Cannot divide by zero value")
+            return Vec2(x=self.x/scalar, y=self.y/scalar)
+            
+    def __truediv__(self, scalar):
+        if not isinstance(scalar, int) and not isinstance(scalar, float):
+            raise ValueError("Operand must be a numeric value")
+        if self.x == 0 or self.y == 0:
+            raise ValueError("Cannot divide by zero value")
+        return Vec2(x=scalar/self.x, y=scalar/self.y)
     
     def __div__(self, scalar):
         if not isinstance(scalar, int) and not isinstance(scalar, float):
@@ -72,10 +86,15 @@ class Vec2(BaseModel):
         self.y = new_pos.y
 
 
+class IVec2(BaseModel):
+    x: int
+    y: int
+
+
 class CarpetMove(BaseModel):
     acceleration: Vec2
     activateShield: bool = False
-    attack: Vec2 | None = None
+    attack: IVec2 | None = None
     id: str
 
 

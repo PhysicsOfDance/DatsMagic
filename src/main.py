@@ -14,6 +14,7 @@ from const import *
 from interval_runner import IntervalRunner
 
 from models import *
+from strategy import *
 
 logger = get_logger("MAIN")
 
@@ -51,11 +52,24 @@ def main():
                 moves = []
                 for (carpet, pid) in zip(context.carpets, context.pids):
                     pid.update_target(carpet)
-                    moves.append(CarpetMove(
-                        acceleration=pid.get_acceleration_3(),
-                        activateShield=False,
-                        id=carpet.id
-                    ))
+
+                    attack_pos = attack_strategy(carpet)
+                    int_attack_pos = {"x": int(attack_pos.x), "y": int(attack_pos.y)} if attack_pos else None
+                    int_attack_pos = {"x": 0, "y": 0}
+
+                    if attack_pos:
+                        moves.append(CarpetMove(
+                            acceleration=pid.get_acceleration_3(),
+                            activateShield=shild_strategy(carpet),
+                            attack=int_attack_pos,
+                            id=carpet.id
+                        ))
+                    else:
+                        moves.append(CarpetMove(
+                            acceleration=pid.get_acceleration_3(),
+                            activateShield=shild_strategy(carpet),
+                            id=carpet.id
+                        ))
                 context.moves = moves
                 # for carpet in context.carpets:
                     # print(f"carpet {carpet.id} pos = {carpet.pos}")
