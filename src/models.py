@@ -16,6 +16,11 @@ class Feedback(BaseModel):
         self.right = 0
 
 
+class IVec2(BaseModel):
+    x: int
+    y: int
+
+
 class Vec2(BaseModel):
     x: float = 0.0
     y: float = 0.0
@@ -75,6 +80,10 @@ class Vec2(BaseModel):
             coef = max_value / self.length
             return coef * self
         return self
+    
+    @property
+    def as_int(self) -> IVec2:
+        return IVec2(x=int(self.x), y=int(self.y))
 
     @property
     def pos(self) -> "Vec2":
@@ -84,11 +93,6 @@ class Vec2(BaseModel):
     def pos(self, new_pos: "Vec2") -> None:
         self.x = new_pos.x
         self.y = new_pos.y
-
-
-class IVec2(BaseModel):
-    x: int
-    y: int
 
 
 class CarpetMove(BaseModel):
