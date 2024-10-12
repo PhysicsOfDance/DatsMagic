@@ -1,6 +1,8 @@
 import typing as tp
 from pydantic import BaseModel
 
+EPS = 1e-3
+
 class Feedback(BaseModel):
     up: int = 0
     down: int = 0
@@ -42,13 +44,25 @@ class Vec2(BaseModel):
     @property
     def length(self) -> float:
         return (self.x ** 2 + self.y ** 2) ** 0.5
+    
+    @property
+    def sqr_length(self) -> float:
+        return self.x ** 2 + self.y ** 2
+    
+    def clipped(self, max_value: float) -> "Vec2":
+        if self.x < EPS and self.y < EPS:
+            return Vec2(x=0, y=0)
+        if self.length > max_value:
+            coef = max_value / self.length
+            return coef * self
+        return self
 
     @property
-    def pos(self):
+    def pos(self) -> "Vec2":
         return Vec2(**self.model_dump())
 
     @pos.setter
-    def pos(self, new_pos: "Vec2"):
+    def pos(self, new_pos: "Vec2") -> None:
         self.x = new_pos.x
         self.y = new_pos.y
 

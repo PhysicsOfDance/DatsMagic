@@ -4,6 +4,7 @@ import pygame
 from context import Context
 from .arrow import draw_arrow
 from .const import *
+from .grid import *
 from .models import *
 
 def draw_loop():

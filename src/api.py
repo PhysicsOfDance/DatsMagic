@@ -7,6 +7,7 @@ import typing as tp
 
 from fastapi import Depends, Response, status
 
+from const import USE_MOCK
 from logger import get_logger
 from models import *
 
@@ -30,12 +31,14 @@ def make_request(
     headers = {
         "X-Auth-Token": os.getenv('TOKEN'),
     }
+    
+    if USE_MOCK:
+        from context import Context
+        context = Context()
+        return True, context.mock_server.state.model_dump()
+    
     resp = requests.request(method, url, headers=headers, json=body, params=params)
-
-    # resp_json = resp.json()
-    with open("mock.json") as mock_file:
-        resp_json = json.load(mock_file)
-        return True, resp_json
+    resp_json = resp.json()
 
     if resp.status_code == status.HTTP_200_OK:
         logger.debug(f"{datetime.datetime.now()}\n{method} Request for URL: {url}\nRequest success\n")

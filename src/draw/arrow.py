@@ -1,3 +1,7 @@
+##################################################
+# This file was found somewhere on StackOverflow #
+##################################################
+
 import pygame
 
 def draw_arrow(

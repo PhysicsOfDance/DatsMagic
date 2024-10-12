@@ -3,10 +3,9 @@ import pygame
 import typing as tp
 from datetime import datetime
 
-from api import make_move
 from const import *
-# from draw.utils import Circle, Dim, Grid, Arrow
 from logger import get_logger
+from mock_server import MockServer
 from models import *
 from utils import IncorrectDataException
 
@@ -22,6 +21,8 @@ class Singleton(type):
 
 class Context(metaclass=Singleton):
     def __init__(self):
+        # Mock server
+        self.mock_server = MockServer()
         # From response
         self.anomalies: list[Anomaly] = []
         self.bounties: list[Bounty] = []
@@ -34,7 +35,6 @@ class Context(metaclass=Singleton):
         self.interrupt: bool = False
         self.maxSpeed: float = 1.0
         self.maxAcceleration: float = 1.0
-
         # Private variables
         self.__current_carpet_index: int = 0
         self.__left_corner_text: str = str(self.__current_carpet_index + 1)
@@ -58,6 +58,7 @@ class Context(metaclass=Singleton):
 
     def update_on_time(self):
         try:
+            from api import make_move
             move_resp = make_move(self.moves)
 
             self.anomalies = move_resp.anomalies
