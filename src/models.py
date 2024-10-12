@@ -40,6 +40,20 @@ class Vec2(BaseModel):
     
     def __rmul__(self, scalar):
         return self.__mul__(scalar)
+
+    def __div__(self, scalar):
+            if not isinstance(scalar, int) and not isinstance(scalar, float):
+                raise ValueError("Operand must be a numeric value")
+            if scalar == 0:
+                raise ValueError("Cannot divide by zero value")
+            return Vec2(x=self.x/scalar, y=self.y/scalar)
+            
+    def __truediv__(self, scalar):
+        if not isinstance(scalar, int) and not isinstance(scalar, float):
+            raise ValueError("Operand must be a numeric value")
+        if self.x == 0 or self.y == 0:
+            raise ValueError("Cannot divide by zero value")
+        return Vec2(x=scalar/self.x, y=scalar/self.y)
     
     @property
     def length(self) -> float:
