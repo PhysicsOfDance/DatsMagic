@@ -73,21 +73,17 @@ def attack(carpet: Carpet, n_closest_dist_enemy: list[tuple[float, Enemy]]):
         if n_closest_dist_enemy[0][0] <= 200:
             return n_closest_dist_enemy[0][1].pos
 
-def carpet_strategy(carpet: Carpet):
+def shild_strategy(carpet: Carpet):
     context = Context()
-    # enemies_dists = calculate_dists(carpet, context.enemies)
-    # n_closest_dist_enemy = n_closest_with_dist(context.enemies, enemies_dists,  2)
-    bounties_dists = calculate_dists(carpet, context.bounties)
-    closest_bounty = n_closest_with_dist(context.bounties, bounties_dists, 1)[1]
+    enemies_dists = calculate_dists(carpet, context.enemies)
+    n_closest_dist_enemy = n_closest_with_dist(context.enemies, enemies_dists,  2)
+    # bounties_dists = calculate_dists(carpet, context.bounties)
+    # closest_bounty = n_closest_with_dist(context.bounties, bounties_dists, 1)[1]
+    return activate_shield(carpet, n_closest_dist_enemy[0]),
 
-    
-    context.moves.append(
-        CarpetMove(
-            acceleration = acceleration(carpet, closest_bounty),
-            # activateShield = activate_shield(carpet, n_closest_dist_enemy[0]),
-            # attack = attack(carpet, n_closest_dist_enemy),
-            id = carpet.id
-        )
-    )
-
+def attack_strategy(carpet: Carpet):
+    context = Context()
+    enemies_dists = calculate_dists(carpet, context.enemies)
+    n_closest_dist_enemy = n_closest_with_dist(context.enemies, enemies_dists,  2)
+    return attack(carpet, n_closest_dist_enemy)
 

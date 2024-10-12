@@ -14,6 +14,7 @@ from const import *
 from interval_runner import IntervalRunner
 
 from models import *
+from strategy import *
 
 logger = get_logger("MAIN")
 
@@ -53,7 +54,8 @@ def main():
                     pid.update_target(carpet)
                     moves.append(CarpetMove(
                         acceleration=pid.get_acceleration_3(),
-                        activateShield=False,
+                        activateShield=shild_strategy(carpet),
+                        attack=attack_strategy(carpet),
                         id=carpet.id
                     ))
                 context.moves = moves
