@@ -1,9 +1,11 @@
 import os
+import sys
 import time
 import threading
 from dotenv import load_dotenv
 
 from draw.drawer import draw_loop
+from pid import PidController
 load_dotenv()
 
 from api import *
@@ -35,18 +37,26 @@ def main():
     if USE_MOCK:
         mock_updater = IntervalRunner(MOCK_UPDATE_TIME, context.mock_server.update_on_time, args=[])
         mock_updater.start()
-    
+
     while not context.interrupt:
         try:
             ###
             # ADD ALL LOGIC HERE
             ###
             if context.carpets:
-                context.moves = [CarpetMove(
-                    acceleration = Vec2(x=0, y=0),
-                    id = carpet.id,
-                ) for carpet in context.carpets]
 
+                if not context.pids:
+                    context.pids = [PidController(carpet=c) for c in context.carpets]
+
+                moves = []
+                for (carpet, pid) in zip(context.carpets, context.pids):
+                    pid.update_target(carpet)
+                    moves.append(CarpetMove(
+                        acceleration=pid.get_acceleration_3(),
+                        activateShield=False,
+                        id=carpet.id
+                    ))
+                context.moves = moves
                 # for carpet in context.carpets:
                 #     print(f"carpet {carpet.id} pos = {carpet.pos}")
                 # print()

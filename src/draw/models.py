@@ -8,18 +8,6 @@ from models import Vec2
 from .const import *
 
 
-class Feedback(BaseModel):
-    up: int
-    down: int
-    left: int
-    right: int
-
-    def flush(self):
-        self.up = 0
-        self.down = 0
-        self.left = 0
-        self.right = 0
-
 class Color(Enum):
     BLACK = pygame.Color('black')
     WHITE = pygame.Color('white')
@@ -28,9 +16,11 @@ class Color(Enum):
     BLUE = pygame.Color('blue')
     YELLOW = pygame.Color('yellow')
     ORANGE = pygame.Color('orange')
+    GRAY = pygame.Color('gray')
 
 class Cell(Vec2):
     color: Color
+    shield: float
 
 class Circle(Vec2):
     radius: float
