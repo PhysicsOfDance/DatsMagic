@@ -49,7 +49,6 @@ def main():
                     context.pids = [PidController(carpet=c) for c in context.carpets]
 
                 moves = []
-
                 for (carpet, pid) in zip(context.carpets, context.pids):
                     pid.update_target(carpet)
                     moves.append(CarpetMove(
@@ -57,7 +56,6 @@ def main():
                         activateShield=False,
                         id=carpet.id
                     ))
-
                 context.moves = moves
                 # for carpet in context.carpets:
                 #     print(f"carpet {carpet.id} pos = {carpet.pos}")
