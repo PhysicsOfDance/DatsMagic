@@ -79,7 +79,7 @@ def draw_grid(screen: pygame.Surface, grid: Grid) -> None:
             screen,
             color=cell.color.value,
             center=(cell.x, cell.y),
-            radius=CELL_RADIUS
+            radius=CELL_RADIUS * CELL_WIDTH
         )
 
     for circle in grid.circles:
