@@ -45,11 +45,12 @@ class PidController:
         context = Context()
 
         # Speed triangle (additional speed = acceleration * SERVER_UPDATE_TIME)
-        from_carpet_to_target = self.target - self.carpet.pos
+        approx_pos = self.carpet.pos + self.carpet.velocity * UPDATE_TIME
+        from_carpet_to_target = self.target - approx_pos
         coef = 1.0 / (from_carpet_to_target.length + EPS)
         from_carpet_to_target = coef * from_carpet_to_target 
         next_speed = from_carpet_to_target * context.maxSpeed * AVERAGE_SPEED_COEF
-        acceleration = (1.0 / SERVER_UPDATE_TIME) * (next_speed - self.carpet.velocity)
+        acceleration = (1.0 / UPDATE_TIME) * (next_speed - self.carpet.velocity)
 
         # Add anomaly fix for acceleration
         acceleration -= self.carpet.anomalyAcceleration
