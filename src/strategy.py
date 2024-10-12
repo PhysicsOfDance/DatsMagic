@@ -55,9 +55,7 @@ def acceleration(carpet: Carpet, bounty: Vec2):
     return acc
 
 def activate_shield(carpet: Carpet, closest_dist_enemy: tuple[float, Enemy]):
-    if carpet.shieldLeftMs == 0 and carpet.shieldCooldownMs <= UPDATE_TIME and closest_dist_enemy[0] <= 230:
-        return True
-    return False
+    return carpet.shieldLeftMs == 0 and carpet.shieldCooldownMs <= UPDATE_TIME and closest_dist_enemy[0] <= 230
 
 
 def attack(carpet: Carpet, n_closest_dist_enemy: list[tuple[float, Enemy]]):
@@ -79,7 +77,7 @@ def shild_strategy(carpet: Carpet):
     n_closest_dist_enemy = n_closest_with_dist(context.enemies, enemies_dists,  2)
     # bounties_dists = calculate_dists(carpet, context.bounties)
     # closest_bounty = n_closest_with_dist(context.bounties, bounties_dists, 1)[1]
-    return activate_shield(carpet, n_closest_dist_enemy[0]),
+    return activate_shield(carpet, n_closest_dist_enemy[0])
 
 def attack_strategy(carpet: Carpet):
     context = Context()

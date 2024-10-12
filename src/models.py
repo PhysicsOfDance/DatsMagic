@@ -86,10 +86,15 @@ class Vec2(BaseModel):
         self.y = new_pos.y
 
 
+class IVec2(BaseModel):
+    x: int
+    y: int
+
+
 class CarpetMove(BaseModel):
     acceleration: Vec2
     activateShield: bool = False
-    attack: Vec2 | None = None
+    attack: IVec2 | None = None
     id: str
 
 
