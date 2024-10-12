@@ -10,6 +10,7 @@ class PidController:
         self.pid_x: PID = PID(P_COEF, I_COEF, D_COEF, 0)
         self.pid_y: PID = PID(P_COEF, I_COEF, D_COEF, 0)
         self.target: Vec2 | None = None
+        self.previous_dist_length = np.inf
         self.carpet: Carpet = carpet
 
     def get_acceleration(self) -> Vec2:
@@ -29,10 +30,12 @@ class PidController:
     def get_acceleration_2(self) -> Vec2:
         if self.target is None:
             return Vec2(x=0, y=0)
-        dist = Vec2(x=(self.target.x - self.carpet.x), y=(self.target.y - self.carpet.y))
-        total = np.sqrt( dist.x** 2 + dist.y ** 2)
-        coef = 10 / total
-        return Vec2(x=dist.x * coef , y=dist.y * coef)
+        dist = self.target - self.carpet.pos
+        total = dist.length
+        from context import Context
+        context = Context()
+        coef = context.maxAcceleration / total
+        return coef * dist
 
 
     def update_target(self, carpet: Carpet):
@@ -42,8 +45,11 @@ class PidController:
 
         if self.target:
             dist = Vec2(x=(self.target.x - self.carpet.x), y=(self.target.y - self.carpet.y))
-            if dist.length < 4:
+            if dist.length < COLLECTED_BOUNTY_DIST or dist.length > self.previous_dist_length:
                 self.target = None
+                self.previous_dist_length = np.inf
+            else:
+                self.previous_dist_length = dist.length
 
         if self.target is None:
             position = np.array([self.carpet.x, self.carpet.y])

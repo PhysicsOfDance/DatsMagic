@@ -39,6 +39,8 @@ class Context(metaclass=Singleton):
         # Private variables
         self.__current_carpet_index: int = 0
         self.__left_corner_text: str = str(self.__current_carpet_index + 1)
+        if USE_MOCK:
+            self.__left_corner_text += " MOCK Server"
 
         self.pids: list[PidController] = []
 
@@ -56,6 +58,8 @@ class Context(metaclass=Singleton):
     def current_carpet_index(self, new_index: int) -> None:
         self.__current_carpet_index = new_index
         self.__left_corner_text = str(self.__current_carpet_index + 1)
+        if USE_MOCK:
+            self.__left_corner_text += " MOCK Server"
 
     ####################################################################
 
